@@ -1,6 +1,7 @@
 package br.com.matheushbmelo.workshopmongo.controllers;
 
 import br.com.matheushbmelo.workshopmongo.domain.User;
+import br.com.matheushbmelo.workshopmongo.domain.dto.UserDto;
 import br.com.matheushbmelo.workshopmongo.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,9 @@ public class UserController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<User>> findAll() {
+    public ResponseEntity<List<UserDto>> findAll() {
         List<User> users = userService.findAllUsers();
-        return ResponseEntity.status(HttpStatus.OK).body(users);
+        List<UserDto> usersDtos = users.stream().map(UserDto::new).toList();
+        return ResponseEntity.status(HttpStatus.OK).body(usersDtos);
     }
 }
