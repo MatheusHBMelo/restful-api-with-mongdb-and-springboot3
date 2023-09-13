@@ -1,5 +1,6 @@
 package br.com.matheushbmelo.workshopmongo.domain;
 
+import br.com.matheushbmelo.workshopmongo.domain.dto.UserDto;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -48,6 +49,14 @@ public class User implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public static User fromDto(UserDto userDto){
+        User user = new User();
+        user.setId(userDto.getId());
+        user.setName(userDto.getName());
+        user.setEmail(userDto.getEmail());
+        return user;
     }
 
     @Override
