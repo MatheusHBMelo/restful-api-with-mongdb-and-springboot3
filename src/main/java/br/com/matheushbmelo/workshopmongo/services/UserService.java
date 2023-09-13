@@ -3,6 +3,7 @@ package br.com.matheushbmelo.workshopmongo.services;
 import br.com.matheushbmelo.workshopmongo.domain.User;
 import br.com.matheushbmelo.workshopmongo.repositories.UserRepository;
 import br.com.matheushbmelo.workshopmongo.services.exceptions.ObjectNotFoundException;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,12 +26,18 @@ public class UserService {
         return user.orElseThrow(() -> new ObjectNotFoundException("Nenhum objeto foi encontrado com o ID:" + id));
     }
 
-    public User insertUser(User obj){
-        return userRepository.save(obj);
+    public void insertUser(User obj){
+        userRepository.save(obj);
     }
 
     public void deleteUser(String id){
         findUserById(id);
         userRepository.deleteById(id);
+    }
+
+    public void updateUser(User obj){
+        User userPersistido = findUserById(obj.getId());
+        BeanUtils.copyProperties(obj, userPersistido);
+        userRepository.save(userPersistido);
     }
 }
