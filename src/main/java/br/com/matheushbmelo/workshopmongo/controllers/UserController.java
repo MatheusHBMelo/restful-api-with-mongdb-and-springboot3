@@ -48,4 +48,10 @@ public class UserController {
                 .toUri();
         return ResponseEntity.created(location).build();
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable(value = "id") String id){
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
+    }
 }
