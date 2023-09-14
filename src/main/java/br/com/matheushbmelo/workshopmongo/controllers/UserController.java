@@ -1,5 +1,6 @@
 package br.com.matheushbmelo.workshopmongo.controllers;
 
+import br.com.matheushbmelo.workshopmongo.domain.Post;
 import br.com.matheushbmelo.workshopmongo.domain.User;
 import br.com.matheushbmelo.workshopmongo.domain.dto.UserDto;
 import br.com.matheushbmelo.workshopmongo.services.UserService;
@@ -34,6 +35,12 @@ public class UserController {
     public ResponseEntity<UserDto> findById(@PathVariable(value = "id") String id){
         User user = userService.findUserById(id);
         return ResponseEntity.status(HttpStatus.OK).body(new UserDto(user));
+    }
+
+    @GetMapping("/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable(value = "id") String id){
+        User user = userService.findUserById(id);
+        return ResponseEntity.status(HttpStatus.OK).body(user.getPosts());
     }
 
     @PostMapping("")
